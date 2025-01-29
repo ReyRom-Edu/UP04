@@ -1,0 +1,44 @@
+CREATE TABLE [artifact] (
+	[id] INTEGER NOT NULL IDENTITY UNIQUE,
+	PRIMARY KEY([id])
+);
+GO
+
+CREATE TABLE [marketplace_lot] (
+	[id] INTEGER NOT NULL IDENTITY UNIQUE,
+	[artifact_id] INTEGER NOT NULL,
+	[date_of_publish] DATE NOT NULL,
+	[quantity] INTEGER NOT NULL,
+	[username] VARCHAR NOT NULL,
+	[price] DECIMAL NOT NULL,
+	PRIMARY KEY([id])
+);
+GO
+
+CREATE TABLE [user] (
+	[id] INTEGER NOT NULL IDENTITY UNIQUE,
+	[username] VARCHAR NOT NULL UNIQUE,
+	[email] VARCHAR NOT NULL UNIQUE,
+	PRIMARY KEY([id])
+);
+GO
+
+CREATE TABLE [order] (
+	[id] INTEGER NOT NULL IDENTITY UNIQUE,
+	[artifact_id] INTEGER NOT NULL,
+	[quantity] INTEGER NOT NULL,
+	[username] VARCHAR NOT NULL,
+	[date] DATE NOT NULL,
+	[price] DECIMAL NOT NULL,
+	PRIMARY KEY([id])
+);
+GO
+
+ALTER TABLE [marketplace_lot]
+ADD FOREIGN KEY([artifact_id]) REFERENCES [artifact]([id])
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+GO
+ALTER TABLE [order]
+ADD FOREIGN KEY([artifact_id]) REFERENCES [artifact]([id])
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+GO
